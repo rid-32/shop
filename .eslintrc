@@ -1,0 +1,51 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true
+  },
+  "extends": ["eslint:recommended"],
+  "globals": {
+    "__dirname": true,
+    "window": true,
+    "document": true,
+    "localStorage": true,
+    "process": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2017,
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "rules": {
+    "comma-dangle": [
+      "warn",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "never"
+      }
+    ],
+    "import/prefer-default-export": 0,
+    "indent": ["error", 4],
+    "getter-return": 0,
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["error", "single"],
+    "max-depth": ["error", 10],
+    "max-len": ["error", { "code": 80 }],
+    "max-statements": 0,
+    "no-confusing-arrow": 0,
+    "no-console": 0,
+    "no-undef": "error",
+    "no-unused-vars": "error",
+    "object-curly-spacing": 0,
+    "prefer-const": 0,
+    "padding-line-between-statements": 0,
+    "require-await": "error",
+    "semi": ["error", "never"]
+  }
+}
