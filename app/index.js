@@ -1,10 +1,11 @@
 import express from 'express'
 
-import { products as productsRoutes } from 'api/routes'
+import { products as productsRoutes, orders as ordersRoutes } from 'routes'
 
 const app = express()
 
 app.use('/products', productsRoutes)
+app.use('/orders', ordersRoutes)
 
 app.use((req, res, next) => {
     const error = new Error('Not found')
