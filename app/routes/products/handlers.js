@@ -8,7 +8,12 @@ export const getProducts = (req, res) => {
 }
 
 export const createProduct = (req, res) => {
-    res.status(201).json({ message: 'New product was created' })
+    const product = {
+        name: req.body.name,
+        price: req.body.price,
+    }
+
+    res.status(201).json({ message: 'New product was created', product })
 }
 
 export const getProduct = (req, res) => {

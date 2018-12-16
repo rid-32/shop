@@ -10,7 +10,9 @@
     "window": true,
     "document": true,
     "localStorage": true,
-    "process": true
+    "process": true,
+    "describe": true,
+    "test": true
   },
   "parserOptions": {
     "ecmaVersion": 2017,

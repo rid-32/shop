@@ -4,10 +4,12 @@
   "description": "Simple RESTful API for a shop",
   "main": "src/index.js",
   "scripts": {
-    "build": "webpack -p",
-    "start": "npm run build && node dist/index.js",
-    "livereload": "cross-env NODE_ENV='development' nodemon --exec npm run start",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack -p && node dist/index.js",
+    "start": "export NODE_ENV=production && npm run build",
+    "livereload": "export NODE_ENV=development && nodemon --exec npm run build",
+    "test": "jest --colors",
+    "test:watch": "jest --colors --watchAll",
+    "test:coverage": "jest --colors --coverage"
   },
   "keywords": [
     "RESTful",
@@ -20,12 +22,16 @@
     "@babel/plugin-proposal-class-properties": "^7.2.1",
     "@babel/plugin-proposal-decorators": "^7.2.2",
     "@babel/preset-env": "^7.2.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.4",
     "clean-webpack-plugin": "^1.0.0",
-    "cross-env": "^5.2.0",
     "eslint": "^5.10.0",
+    "jest": "^23.6.0",
     "nodemon": "^1.18.9",
     "prettier-eslint": "^8.8.2",
+    "superagent": "^4.0.0",
+    "supertest": "^3.3.0",
     "webpack": "^4.27.1",
     "webpack-cli": "^3.1.2",
     "webpack-node-externals": "^1.7.2"
@@ -33,6 +39,7 @@
   "dependencies": {
     "config": "^3.0.0",
     "dotenv": "^6.2.0",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "morgan": "^1.9.1"
   }
 }
