@@ -10,7 +10,7 @@ const mode = process.env.NODE_ENV || 'production'
 
 module.exports = {
     mode,
-    entry: path.join(__dirname, 'server.js'),
+    entry: ['babel-polyfill', path.join(__dirname, 'server.js')],
     output: {
         path: path.join(__dirname, 'dist'),
         filename: 'index.js',
