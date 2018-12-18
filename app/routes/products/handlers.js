@@ -8,7 +8,7 @@ export const getProducts = async (req, res) => {
 
         res.status(200).json(products)
     } catch (error) {
-        res.status(404)
+        res.status(404).json('Not found')
     }
 }
 
@@ -27,7 +27,7 @@ export const createProduct = async (req, res) => {
             product: createdProduct,
         })
     } catch (error) {
-        res.status(400).json({ message: 'Product was not created' })
+        res.status(403).json({ message: 'Product was not created' })
     }
 }
 
@@ -43,20 +43,49 @@ export const getProduct = async (req, res) => {
             res.status(404).json({ message: 'Product was not found' })
         }
     } catch (error) {
-        res.status(400).json({
+        res.status(403).json({
             message: 'Invalid id',
         })
     }
 }
 
-export const changeProduct = (req, res) => {
-    res.status(200).json({
-        message: 'Product was changed',
-    })
+export const changeProduct = async (req, res) => {
+    const productId = req.params.productId
+    const keys = Object.keys(req.body) || []
+    const newProductProps = keys.reduce(
+        (acc, key) =>
+            key === 'name' || key === 'price'
+                ? { ...acc, [key]: req.body[key] }
+                : acc,
+        {}
+    )
+
+    try {
+        await Product.updateOne({ _id: productId }, newProductProps)
+
+        res.status(200).json({
+            message: 'Product was updated',
+        })
+    } catch (error) {
+        res.status(403).json({
+            message: 'Product was not updated',
+            error,
+        })
+    }
 }
 
-export const deleteProduct = (req, res) => {
-    res.status(200).json({
-        message: 'Product was deleted',
-    })
+export const deleteProduct = async (req, res) => {
+    const productId = req.params.productId
+
+    try {
+        await Product.remove({ _id: productId })
+
+        res.status(200).json({
+            message: 'Product was deleted',
+        })
+    } catch (error) {
+        res.status(403).json({
+            message: 'Product was not deleted',
+        })
+    }
 }

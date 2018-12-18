@@ -12,7 +12,9 @@
     "localStorage": true,
     "process": true,
     "describe": true,
-    "test": true
+    "test": true,
+    "beforeAll": true,
+    "afterAll": true
   },
   "parserOptions": {
     "ecmaVersion": 2017,
