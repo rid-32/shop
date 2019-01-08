@@ -3,30 +3,15 @@ import mongoose from 'mongoose'
 import Product from 'models/product'
 
 /* Получение всех продуктов из БД */
-const getProductsPayload = products => {
-    const total = products.length
-    const data = products.map(product => ({
-        _id: product._id,
-        name: product.name,
-        price: product.price,
-        request: {
-            type: 'GET',
-            url: `http://localhost:9090/products/${product._id}`,
-        },
-    }))
-
-    return {
-        total,
-        data,
-    }
-}
-
 export const getProducts = async (req, res) => {
     try {
         const products = await Product.find()
             .select('name price _id')
             .exec()
-        const payload = getProductsPayload(products)
+        const payload = {
+            data: products,
+            total: products.length,
+        }
 
         res.status(200).json(payload)
     } catch (error) {
@@ -62,7 +47,7 @@ export const getProduct = async (req, res) => {
     const id = req.params.productId
 
     try {
-        const product = await Product.findById(id)
+        const product = await Product.findById(id).exec()
 
         if (product) {
             res.status(200).json(product)
@@ -107,12 +92,17 @@ export const changeProduct = async (req, res) => {
     }
 }
 
-/* Удаление  продукта по id */
+/* Удаление  продукта по id
+ При удалении никак не учитывается, что данный продукт может быть к каком-то
+ заказе. Если продукт указан в незавершённом заказе, то либо не должно быть
+ произведено удаление продукта, либо продукт должен быть удалён из заказа,
+ либо заказ должен быть завершен (самый плохой вариант)
+*/
 export const deleteProduct = async (req, res) => {
     const productId = req.params.productId
 
     try {
-        await Product.remove({ _id: productId })
+        await Product.deleteOne({ _id: productId })
 
         res.status(200).json({
             message: 'Product was deleted',
